@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management System - Billing</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            background-color: #4CAF50;
+            overflow: hidden;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            /* display: flex; */
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        footer{
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        /* start your new css code hear  */
+        .billcontainer {
+            max-width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .add-receipt, .remove-receipt {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .add-receipt h3, .remove-receipt h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to Gym Management System</h1>
+        <p>Your fitness journey starts here</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="member.html">Members</a>
+        <a href="#">Classes</a>
+        <a href="#">Payments</a>
+        <a href="#">Reports</a>
+        <a href="billing.html">View-Bill</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <!-- Main Content  Section  write Your html code hear -->
+    <div class="container">
+
+        <!-- code html -->
+        <div class="billcontainer">
+            <h2>Bill Receipts</h2>
+            
+            
+    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Receipt ID</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptTableBody">
+                    <tr>
+                        <td>001</td>
+                        <td>2023-10-01</td>
+                        <td>$50.00</td>
+                        <td>Paid</td>
+                        <td><a href="receipts/receipt_001.pdf" download>Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>002</td>
+                        <td>2023-09-01</td>
+                        <td>$50.00</td>
+                        <td>Paid</td>
+                        <td><a href="receipts/receipt_002.pdf" download>Download</a></td>
+                    </tr>
+                    <tr>
+                        <td>003</td>
+                        <td>2023-08-01</td>
+                        <td>$50.00</td>
+                        <td>Paid</td>
+                        <td><a href="receipts/receipt_003.pdf" download>Download</a></td>
+                    </tr>
+                    <!-- Existing rows will be here -->
+    
+                </tbody>
+            </table>
+            <br>
+            <!-- Form to Add New Receipt -->
+            <div class="add-receipt">
+                <h3>Add New Receipt</h3>
+                <form id="addReceiptForm" onsubmit="return addReceipt(event)">
+                    <input type="text" id="receiptId" placeholder="Receipt ID" required>
+                    <input type="date" id="receiptDate" required>
+                    <input type="text" id="receiptAmount" placeholder="Amount" required>
+                    <select id="receiptStatus" required>
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                    <input type="text" id="receiptFile" placeholder="Receipt File URL" required>
+                    <button type="submit">Add Receipt</button>
+                </form>
+            </div>
+    
+            <!-- Form to Remove Bill -->
+            <div class="remove-receipt">
+                <h3>Remove Bill</h3>
+                <form id="removeReceiptForm" onsubmit="return removeReceipt(event)">
+                    <input type="text" id="removeReceiptId" placeholder="Receipt ID to Remove" required>
+                    <button type="submit">Remove Receipt</button>
+                </form>
+            </div>
+        </div>
+    
+
+
+
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Gym Management System | All Rights Reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
